@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101216">
+  <meta name="description" content="Theo dõi biến động Binance Futures trong 30 giây. Cảnh báo tăng, giảm và tùy chỉnh ngưỡng phần trăm.">
+  <title>Futures Radar · Cảnh báo 30 giây</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101216'/%3E%3Cpath d='M5 19h6l3-10 5 17 3-10h5' fill='none' stroke='%23f4c54a' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>:root{color-scheme:dark;--bg:#101216;--panel:#191c22;--panel-2:#20242c;--line:#2d323b;--text:#f0f2f6;--muted:#a2abb9;--yellow:#f4c54a;--green:#5de3af;--red:#ff7c90;--mono:ui-monospace,SFMono-Regular,Consolas,monospace;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);line-height:1.5}button,input{font:inherit}button,a,input,summary{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}button{color:var(--text)}a{color:inherit}button:disabled{cursor:default;opacity:.5}.shell{max-width:1520px;margin:auto;padding:0 40px}.topbar{min-height:92px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{text-decoration:none;display:flex;gap:12px;align-items:center;letter-spacing:.07em;font-size:1.05rem}.brand strong{font-weight:400;color:var(--muted)}.brand-icon{display:grid;place-items:center;background:var(--yellow);color:#11151b;width:35px;height:38px;font-size:2rem;font-weight:800;border-radius:7px}.top-meta{display:flex;align-items:center;gap:24px}.source-label,.eyebrow{font-size:.75rem;letter-spacing:.1em;font-weight:600;color:var(--muted)}#clock{font-family:var(--mono);font-size:.875rem;color:var(--muted)}main{padding:32px 0 24px}.page-heading{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:22px}.eyebrow{margin:0 0 6px;color:var(--yellow)}h1{font-size:clamp(1.5rem,2.3vw,2.15rem);line-height:1.3;margin:0;letter-spacing:-.025em;font-weight:650}h1 span{color:var(--muted);font-weight:450}.live-state{font-size:.875rem;display:flex;align-items:center;gap:8px;white-space:nowrap}.live-state i{width:7px;height:7px;border-radius:50%;background:var(--yellow)}.live-state.live{color:var(--green)}.live-state.live i{background:var(--green)}.live-state.offline{color:var(--red)}.live-state.offline i{background:var(--red)}.connection-notice{font-size:.875rem;background:#252315;border:1px solid #51452a;border-radius:8px;color:#f5d57d;padding:11px 15px;margin-bottom:20px}.connection-notice[hidden]{display:none}.settings-panel{display:grid;grid-template-columns:1.35fr 1fr 1fr;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.threshold-group,.window-group,.sound-group{padding:22px 26px}.window-group,.sound-group{border-left:1px solid var(--line)}.setting-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}label,.setting-label{font-size:.875rem;font-weight:550}.tag{font-size:.75rem;color:var(--muted);letter-spacing:.045em}.threshold-line{display:flex;align-items:center;gap:5px;margin-top:9px;min-height:48px}.plusminus,.percent{font-size:1.6rem;color:var(--yellow)}#threshold{font-family:var(--mono);font-size:2rem;font-weight:550;background:none;border:0;border-bottom:1px solid transparent;color:var(--yellow);width:3.7ch;min-width:72px;padding:0;-moz-appearance:textfield}#threshold::-webkit-inner-spin-button,#threshold::-webkit-outer-spin-button{-webkit-appearance:none}#threshold:focus{border-bottom:1px solid var(--yellow)}.presets{display:flex;gap:6px;margin-left:auto}.presets button{font-size:.875rem;padding:6px 9px;border:1px solid var(--line);border-radius:5px;background:transparent}.presets button[aria-pressed=true]{color:var(--yellow);border-color:#7a6128;background:#342e1d}#threshold-slider{width:100%;height:16px;margin:6px 0 7px;accent-color:var(--yellow);cursor:pointer}.help{font-size:.8125rem;color:var(--muted);margin:5px 0 0;line-height:1.5}.help strong{font-weight:500;color:var(--text)}.window-value{font-family:var(--mono);display:flex;align-items:baseline;gap:9px;font-size:2.5rem;line-height:1.25;margin:15px 0 25px}.window-value>span:first-child{font-size:.875rem;color:var(--muted);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.window-track{display:flex;align-items:end;gap:4px;height:22px;margin-left:auto}.window-track i{display:block;width:3px;height:12px;background:#747c89}.window-track i:nth-child(2n){height:21px}.window-track i:nth-child(3n){background:var(--yellow);height:29px}.sound-group{display:flex;flex-direction:column;justify-content:center}.sound-button{display:flex;gap:10px;align-items:center;border:0;background:none;padding:8px 0;font-size:.9375rem}.sound-icon{color:var(--muted);font-size:1.45rem}.toggle{height:23px;width:39px;min-width:39px;border-radius:20px;background:#414750;margin-left:auto;padding:3px;transition:background .2s}.toggle:after{content:"";width:17px;height:17px;display:block;border-radius:50%;background:#bec6d2;transition:transform .2s}.sound-button[aria-pressed=true] .toggle{background:var(--yellow)}.sound-button[aria-pressed=true] .toggle:after{background:#101216;transform:translateX(16px)}.sound-message,.field-error{font-size:.8125rem;color:var(--red);margin:6px 0 0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;margin:22px 0;overflow:hidden}.metric{background:var(--bg);padding:18px 24px;display:flex;flex-direction:column}.metric>span{color:var(--muted);font-size:.875rem}.metric>strong{font-family:var(--mono);font-size:1.8rem;font-weight:500;margin:5px 0}.metric:nth-child(3)>strong{color:var(--yellow)}.metric small{font-size:.75rem;color:var(--muted)}.workspace{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(300px,1fr);gap:22px;align-items:start}.market-panel,.alerts-panel{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.panel-heading{padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-heading h2{font-size:1.0625rem;margin:0;font-weight:600}.panel-heading p{font-size:.8125rem;color:var(--muted);margin:4px 0 0}.count-tag{font-size:.75rem;color:var(--muted);white-space:nowrap;padding:3px 8px;background:var(--panel-2);border-radius:4px}.alert-badge{color:var(--yellow);font-size:.8125rem;background:#342e1d;border:1px solid #51452a;border-radius:5px;min-width:25px;text-align:center;padding:2px 6px}.table-wrap{max-height:560px;overflow:auto;scrollbar-width:thin;scrollbar-color:#414751 transparent}table{width:100%;border-collapse:collapse;text-align:left;font-size:.875rem}th{position:sticky;top:0;background:#1e2229;color:var(--muted);font-size:.75rem;font-weight:500;z-index:1;text-align:right;white-space:nowrap}th:first-child{text-align:left}th,td{padding:12px 20px}td{border-bottom:1px solid #292e36;text-align:right;font-family:var(--mono)}td:first-child{text-align:left;font-family:inherit}tr:last-child td{border-bottom:0}tr.alert-up{background:#1b2b29}tr.alert-down{background:#2f222a}.symbol{font-weight:600;font-size:.875rem;display:block}.market-name{color:var(--muted);font-size:.75rem;font-weight:400;display:block;margin-top:2px}.price-cell{color:#d5dbe5;font-size:.8125rem}.change{font-weight:600;font-size:.875rem;white-space:nowrap}.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--muted)}.warmup{display:inline-block;min-width:57px;color:var(--muted);font-family:inherit;font-size:.75rem}.sparkline{width:74px;height:29px;display:inline-block;vertical-align:middle;overflow:visible}.table-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 20px;color:var(--muted);font-size:.75rem;border-top:1px solid var(--line)}.text-button{border:0;background:none;color:var(--yellow);padding:6px 0;font-size:.8125rem;white-space:nowrap}.empty-state{padding:46px 25px 54px;display:flex;flex-direction:column;align-items:center;text-align:center}.empty-state[hidden]{display:none}.empty-icon{color:#737e8f;display:grid;place-items:center;width:52px;height:52px;border:1px solid #414751;border-radius:50%;font-size:1.8rem;margin-bottom:18px}.empty-state strong{font-size:.9375rem;font-weight:500}.empty-state p{max-width:320px;font-size:.875rem;color:var(--muted);margin:7px 0 0}.alert-feed{max-height:538px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#414751 transparent}.alert-card{padding:17px 20px;border-top:1px solid var(--line);border-left:3px solid var(--green);background:linear-gradient(90deg,#1c2b29,transparent 90%)}.alert-card.negative{border-left-color:var(--red);background:linear-gradient(90deg,#30232a,transparent 90%)}.alert-card.fresh{animation:arrive .35s ease-out}.alert-card-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.alert-card-top strong{font-size:.9375rem}.alert-card-top b{font-family:var(--mono);font-size:1.2rem;font-weight:600}.alert-card-details{font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px;margin-top:5px}.alert-prices{font-family:var(--mono);font-size:.8125rem;margin:9px 0 0;color:#c9d0dd}.alert-footer{font-size:.75rem;color:var(--muted);border-top:1px solid var(--line);padding:13px 20px}.alert-empty{min-height:317px;justify-content:center}.footer{margin-top:25px;color:var(--muted);font-size:.8125rem}.feed-status{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.feed-status span{padding-left:12px;position:relative}.feed-status span:before{position:absolute;left:0;top:7px;content:"";width:5px;height:5px;background:var(--yellow);border-radius:50%}.feed-status span.connected:before{background:var(--green)}.feed-status span.failed:before{background:var(--red)}.footer p{margin:8px 0}.footer details{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}.footer summary{cursor:pointer;display:list-item;width:fit-content}.footer details p{max-width:980px;line-height:1.7}.footer details a{color:var(--yellow)}.toast-region{position:fixed;bottom:22px;right:22px;z-index:5;max-width:calc(100vw - 32px);pointer-events:none}.toast{max-width:380px;background:#242b32;border:1px solid var(--green);box-shadow:0 12px 36px #0008;border-radius:10px;padding:15px 19px;animation:arrive .3s ease-out}.toast.negative{border-color:var(--red)}.toast strong{display:block;font-family:var(--mono);font-size:1.05rem}.toast span{display:block;color:var(--muted);font-size:.8125rem;margin-top:3px}@keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}[hidden]{display:none!important}@media(min-width:1450px){.shell{padding:0 54px}}@media(max-width:1100px){.shell{padding:0 24px}.settings-panel{grid-template-columns:1.2fr 1fr}.sound-group{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:12px 24px;display:grid;grid-template-columns:250px 1fr;gap:5px 28px;align-items:center}.sound-message{grid-column:1/-1}.workspace{grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr)}th,td{padding:12px 14px}.trend-heading,.trend-cell{display:none}.metric{padding:18px}.window-value{margin-bottom:25px}}@media(max-width:800px){.workspace{grid-template-columns:1fr}.alerts-panel{order:-1}.alert-empty{min-height:auto;padding:22px}.alert-empty .empty-icon{display:none}.alert-feed{max-height:315px}.alert-footer{padding:10px 20px}.topbar{min-height:74px}.source-label{display:none}.page-heading{align-items:flex-start;gap:12px}.live-state{padding-top:5px;font-size:.8125rem}.metrics{grid-template-columns:1fr 1fr}.metric>strong{font-size:1.6rem}.trend-heading,.trend-cell{display:table-cell}.table-wrap{max-height:440px}.footer{margin-top:20px}}@media(max-width:540px){.shell{padding:0 16px}.brand{font-size:.875rem;gap:8px}.brand-icon{width:30px;height:32px;font-size:1.7rem}.top-meta{gap:8px}#clock{font-size:.75rem}main{padding-top:24px}.page-heading{display:block;margin-bottom:17px}.page-heading h1{font-size:1.6rem;max-width:300px}.live-state{margin-top:12px}.settings-panel{grid-template-columns:1fr}.threshold-group{padding:18px 20px}.window-group{border-left:0;border-top:1px solid var(--line);padding:14px 20px;display:grid;grid-template-columns:1fr auto;align-items:center}.window-value{margin:0;gap:8px;font-size:1.5rem}.window-track{display:none}.window-group .help{grid-column:1/-1}.sound-group{display:block;grid-column:auto;padding:10px 20px 15px}.sound-button{width:100%}.metrics{margin:17px 0}.metric{padding:13px 16px;min-width:0}.metric>span{font-size:.8125rem}.metric small{line-height:1.4;min-height:1.4em}.workspace{gap:17px}.panel-heading{padding:17px}.panel-heading p{font-size:.8125rem}.panel-heading h2{font-size:1rem}.count-tag{display:none}th,td{padding:11px 12px}th{font-size:.75rem}.price-cell{font-size:.75rem}.symbol{font-size:.8125rem;overflow-wrap:anywhere}.trend-heading,.trend-cell{display:none}.table-footer{padding:11px 13px}.alert-card{padding:14px 17px}.connection-notice{font-size:.8125rem;padding:10px 12px}.feed-status{gap:8px 14px}.feed-status span{font-size:.75rem}.toast-region{right:16px;bottom:16px}.alert-empty p{font-size:.8125rem}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}@media(min-width:801px){.alerts-panel{position:sticky;top:20px}}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Futures Radar trang chính"><span class="brand-icon" aria-hidden="true">ϟ</span><span>FUTURES <strong>RADAR</strong></span></a>
+      <div class="top-meta"><span class="source-label">BINANCE FUTURES</span><time id="clock">--:--:--</time></div>
+    </header>
+    <main>
+      <div class="page-heading"><div><p class="eyebrow">THEO DÕI THỊ TRƯỜNG</p><h1>Bắt nhịp biến động <span>30 giây.</span></h1></div><div class="live-state" id="overall-state"><i></i><span>Đang kết nối</span></div></div>
+      <div class="connection-notice" id="connection-notice" role="status">Đang kết nối luồng giá Binance. Mỗi hợp đồng cần đủ 30 giây dữ liệu trước khi có cảnh báo.</div>
+      <section class="settings-panel" aria-label="Cài đặt cảnh báo">
+        <div class="threshold-group"><div class="setting-heading"><label for="threshold">Ngưỡng cảnh báo</label><span class="tag">TĂNG & GIẢM</span></div>
+          <div class="threshold-line"><span class="plusminus">±</span><input id="threshold" type="number" min="0.1" max="100" step="0.1" value="2" inputmode="decimal" aria-describedby="threshold-help threshold-error"><span class="percent">%</span><div class="presets" aria-label="Mức ngưỡng nhanh"><button type="button" data-threshold="2" aria-pressed="true">2%</button><button type="button" data-threshold="5" aria-pressed="false">5%</button><button type="button" data-threshold="10" aria-pressed="false">10%</button></div></div>
+          <input id="threshold-slider" aria-label="Điều chỉnh ngưỡng nhanh từ 2 đến 10 phần trăm" type="range" min="2" max="10" step="0.1" value="2">
+          <p class="help" id="threshold-help">Cảnh báo từ <strong id="threshold-copy">±2%</strong> trở lên; vẫn báo khi vượt 10%.</p><p id="threshold-error" class="field-error" role="alert" hidden></p>
+        </div>
+        <div class="window-group"><span class="setting-label">Cửa sổ so sánh</span><div class="window-value">30<span>giây</span><span class="window-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="help">Giá hiện tại so với 30 giây trước.</p></div>
+        <div class="sound-group"><button class="sound-button" id="sound-toggle" type="button" aria-pressed="false"><span class="sound-icon" aria-hidden="true">♪</span><span id="sound-label">Bật âm thanh</span><span class="toggle" aria-hidden="true"></span></button><p class="help">Phát tiếng khi có cảnh báo mới.</p><p class="sound-message" id="sound-message" role="status"></p></div>
+      </section>
+      <section class="metrics" aria-label="Tổng quan"><div class="metric"><span>Hợp đồng có dữ liệu</span><strong id="stat-contracts">—</strong><small id="coverage">USDⓈ-M + COIN-M</small></div><div class="metric"><span>Đã đủ 30 giây</span><strong id="stat-ready">0</strong><small id="warming-copy">Đang thu thập dữ liệu</small></div><div class="metric"><span>Đang vượt ngưỡng</span><strong id="stat-active">0</strong><small>Tăng hoặc giảm</small></div><div class="metric"><span>Cảnh báo phiên này</span><strong id="stat-alerts">0</strong><small id="last-alert-copy">Chưa có cảnh báo</small></div></section>
+      <div class="workspace">
+        <section class="market-panel" aria-labelledby="market-heading"><div class="panel-heading"><div><h2 id="market-heading">Biến động mạnh nhất</h2><p>Xếp theo mức biến động tuyệt đối trong 30 giây.</p></div><span class="count-tag" id="table-count">0 hợp đồng</span></div>
+          <div class="table-wrap"><table><thead><tr><th scope="col">Hợp đồng</th><th scope="col">Giá gần nhất</th><th scope="col">30 giây</th><th scope="col" class="trend-heading">Nhịp giá</th></tr></thead><tbody id="market-rows"></tbody></table></div>
+          <div id="market-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">⌁</span><strong>Đang chờ giá đầu tiên</strong><p>Dữ liệu thật sẽ xuất hiện khi kết nối thành công.</p></div>
+          <div class="table-footer"><span id="table-note">Theo dõi toàn bộ hợp đồng đang giao dịch.</span><button id="show-more" class="text-button" type="button" hidden>Xem thêm</button></div>
+        </section>
+        <aside class="alerts-panel" aria-labelledby="alerts-heading"><div class="panel-heading"><div><h2 id="alerts-heading">Cảnh báo mới</h2><p>Coin vừa vượt ngưỡng xuất hiện ở đầu.</p></div><span class="alert-badge" id="alert-badge">0</span></div><div id="alert-feed" class="alert-feed"></div><div id="alerts-empty" class="empty-state alert-empty"><span class="empty-icon" aria-hidden="true">↕</span><strong>Chưa có biến động đạt ngưỡng</strong><p id="alert-empty-copy">Chờ coin tăng hoặc giảm ít nhất 2% trong 30 giây.</p></div><div class="alert-footer">Lưu tối đa 100 cảnh báo trong phiên mở trang.</div></aside>
+      </div>
+      <footer class="footer"><div class="feed-status"><span id="status-UM">USDⓈ-M · đang kết nối</span><span id="status-CM">COIN-M · đang kết nối</span><button type="button" class="text-button" id="reconnect">Kết nối lại</button></div><p>Giữ trang mở để theo dõi. Khi khóa màn hình hoặc chuyển ứng dụng, trình duyệt có thể tạm dừng cảnh báo.</p><details><summary>Cách tính & nguồn dữ liệu</summary><p>Lấy giá giao dịch gần nhất từ luồng Binance Futures, cập nhật khoảng mỗi giây. Biến động = (giá hiện tại − giá 30 giây trước) ÷ giá 30 giây trước × 100%. Mốc so sánh là giá quan sát cuối cùng tại hoặc trước thời điểm đó.</p><p>Quét USDⓈ-M và COIN-M, gồm hợp đồng vĩnh cửu và có kỳ hạn. Khi chưa đọc được danh mục hợp đồng, phạm vi chỉ gồm các mã mà luồng giá trả về và sẽ được ghi rõ ở trạng thái kết nối. Kết nối gián đoạn sẽ thu thập lại 30 giây.</p><p>Mỗi chiều tăng/giảm báo một lần khi vượt ngưỡng. Cảnh báo được kích hoạt lại khi biến động xuống dưới 80% ngưỡng, đảo chiều vượt ngưỡng hoặc bạn đổi ngưỡng. Đây là giá tại các điểm cập nhật, không bảo đảm bắt được mọi biến động giữa hai lần cập nhật.</p><p><a href="https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/ws-streams/market" target="_blank" rel="noopener noreferrer">Tài liệu nguồn Binance</a></p></details></footer>
+    </main>
+  </div>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script>(function (root) {
+  'use strict';
+  const WINDOW_MS = 30_000;
+  const EPSILON = 1e-8;
+  const validSymbol = s => typeof s === 'string' && /^[A-Z0-9_]{2,60}$/.test(s);
+  function marketOf(tick, fallback) {
+    if (Number(tick.st) === 1) return 'UM';
+    if (Number(tick.st) === 2) return 'CM';
+    return fallback;
+  }
+  class RadarEngine {
+    constructor(threshold = 2) {
+      this.rows = new Map();
+      this.threshold = threshold;
+      this.sequence = 0;
+      this.setThreshold(threshold);
+    }
+    setThreshold(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n) || n < 0.1 || n > 100) throw new RangeError('Ngưỡng phải từ 0,1% đến 100%.');
+      this.threshold = n;
+      for (const row of this.rows.values()) row.alertSide = 0;
+    }
+    resetMarket(market) {
+      for (const [key, row] of this.rows) if (row.market === market) this.rows.delete(key);
+    }
+    remove(key) { this.rows.delete(key); }
+    ingest(tick, fallbackMarket) {
+      const price = Number(tick.c), time = Number(tick.E);
+      if (!validSymbol(tick.s) || !(price > 0) || !Number.isFinite(price) || !Number.isFinite(time) || time < 0) return false;
+      const market = marketOf(tick, fallbackMarket);
+      if (market !== 'UM' && market !== 'CM') return false;
+      const key = market + ':' + tick.s;
+      let row = this.rows.get(key);
+      if (!row) {
+        row = {key, market, symbol: tick.s, firstTime: time, lastTime: time, price,
+          samples: [], alertSide: 0, base: null, pct: null, progress: 0, ready: false};
+        this.rows.set(key, row);
+      } else if (time <= row.lastTime) {
+        return false; // Duplicate or out-of-order packet, including merged feeds.
+      }
+      row.price = price;
+      row.lastTime = time;
+      row.samples.push({time, price});
+      this.prune(row, time - WINDOW_MS);
+      return true;
+    }
+    prune(row, target) {
+      // Preserve the last observed price at/before the left edge, even if
+      // unchanged tickers were omitted from the all-market delta stream.
+      let n = 0;
+      while (n + 1 < row.samples.length && row.samples[n + 1].time <= target) n++;
+      if (n) row.samples.splice(0, n);
+    }
+    evaluate(market, now, healthy = true) {
+      const alerts = [];
+      for (const row of this.rows.values()) {
+        if (row.market !== market) continue;
+        if (!healthy || !Number.isFinite(now)) {
+          row.ready = false; row.pct = null; row.base = null; row.progress = 0;
+          continue;
+        }
+        row.progress = Math.min(1, Math.max(0, (now - row.firstTime) / WINDOW_MS));
+        const target = now - WINDOW_MS;
+        this.prune(row, target);
+        const anchor = row.samples[0];
+        row.ready = row.progress === 1 && anchor.time <= target && row.lastTime <= now;
+        if (!row.ready) { row.pct = null; row.base = null; continue; }
+        row.base = anchor.price;
+        row.pct = (row.price - anchor.price) / anchor.price * 100;
+        const side = row.pct < 0 ? -1 : 1;
+        const magnitude = Math.abs(row.pct);
+        // Re-arm below 80% of the threshold to avoid repeated boundary noise.
+        if (magnitude < this.threshold * 0.8) row.alertSide = 0;
+        if (magnitude + EPSILON >= this.threshold && row.alertSide !== side) {
+          row.alertSide = side;
+          alerts.push({id: ++this.sequence, key: row.key, market: row.market,
+            symbol: row.symbol, pct: row.pct, price: row.price, base: row.base,
+            time: now, threshold: this.threshold});
+        }
+      }
+      return alerts;
+    }
+  }
+  const api = {RadarEngine, WINDOW_MS, marketOf, validSymbol};
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.FuturesCore = api;
+})(globalThis);
+</script>
+  <script>(function () {
+  'use strict';
+  const {RadarEngine, marketOf, validSymbol} = FuturesCore;
+  const $ = id => document.getElementById(id);
+  const names = {UM: 'USDⓈ-M', CM: 'COIN-M'};
+  const STORAGE_KEY = 'futures-radar-threshold-v1';
+  let saved = 2;
+  try { const v = Number(localStorage.getItem(STORAGE_KEY)); if (v >= 0.1 && v <= 100) saved = v; } catch (_) {}
+  const engine = new RadarEngine(saved);
+  const feeds = [
+    {market:'UM', rest:'https://fapi.binance.com/fapi/v1/exchangeInfo', endpoints:[
+      {url:'wss://fstream.binance.com/market/ws/!miniTicker@arr', fallback:'UM'},
+      {url:'wss://fstream.binance.com/ws/!miniTicker@arr', fallback:'UM'}]},
+    {market:'CM', rest:'https://dapi.binance.com/dapi/v1/exchangeInfo', endpoints:[
+      {url:'wss://dstream.binance.com/ws/!miniTicker@arr', fallback:'CM'},
+      {url:'wss://dstream.binance.com/market/ws/!miniTicker@arr', fallback:'CM'},
+      {url:'wss://fstream.binance.com/market/ws/!miniTicker@arr', fallback:'UM'}]}
+  ].map(config => ({...config, ws:null, timer:0, index:0, failures:0, generation:0,
+    state:'connecting', openedAt:0, receivedAt:0, eventTime:0, retryAt:0,
+    catalog:new Map(), catalogOk:false, catalogBusy:false, expected:0}));
+  const history = [];
+  let totalAlerts = 0, visibleCount = 20, lastLoop = performance.now(), toastTimer = 0;
+  let audio = null, soundEnabled = false, lastSound = -Infinity, hiddenAt = null;
+  const pct = n => (n > 0 ? '+' : '') + n.toFixed(2) + '%';
+  const price = n => Number(n).toLocaleString('en-US', {maximumFractionDigits:Math.abs(n) < 1 ? 10 : Math.abs(n) < 100 ? 6 : 4});
+  const timeLabel = n => new Date(n).toLocaleTimeString('vi-VN', {hour12:false});
+  const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  function healthy(feed) { return feed.state === 'live' && performance.now() - feed.receivedAt < 8_000; }
+  function syncThreshold() {
+    $('threshold').value = engine.threshold;
+    $('threshold-slider').value = Math.max(2, Math.min(10, engine.threshold));
+    $('threshold-copy').textContent = '±' + engine.threshold + '%';
+    $('alert-empty-copy').textContent = `Chờ coin tăng hoặc giảm ít nhất ${engine.threshold}% trong 30 giây.`;
+    document.querySelectorAll('[data-threshold]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.threshold) === engine.threshold)));
+    $('threshold-error').hidden = true;
+    $('threshold').removeAttribute('aria-invalid');
+  }
+  function changeThreshold(value) {
+    try {
+      if (String(value).trim() === '') throw new RangeError('Nhập ngưỡng từ 0,1% đến 100%.');
+      engine.setThreshold(Number(String(value).replace(',', '.')));
+      try { localStorage.setItem(STORAGE_KEY, String(engine.threshold)); } catch (_) {}
+      syncThreshold(); evaluateAll(); render();
+      return {threshold:engine.threshold, windowSeconds:30};
+    } catch (error) {
+      $('threshold-error').textContent = error.message;
+      $('threshold-error').hidden = false;
+      $('threshold').setAttribute('aria-invalid', 'true');
+      throw error;
+    }
+  }
+  function applyThreshold(value) { try { changeThreshold(value); } catch (_) {} }
+  $('threshold').addEventListener('change', event => applyThreshold(event.target.value));
+  $('threshold').addEventListener('keydown', event => { if(event.key === 'Enter') event.target.blur(); });
+  $('threshold-slider').addEventListener('input', event => applyThreshold(event.target.value));
+  document.querySelectorAll('[data-threshold]').forEach(button => button.addEventListener('click', () => applyThreshold(button.dataset.threshold)));
+  $('show-more').addEventListener('click', () => { visibleCount += 50; render(); });
+  $('reconnect').addEventListener('click', () => { for(const feed of feeds) { start(feed, true); loadCatalog(feed); } render(); });
+  async function loadCatalog(feed) {
+    if (feed.catalogBusy) return;
+    feed.catalogBusy = true;
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12_000);
+    try {
+      const response = await fetch(feed.rest, {signal:controller.signal, cache:'no-store', credentials:'omit'});
+      if (!response.ok) throw new Error('Không tải được danh mục.');
+      const payload = await response.json();
+      if (!Array.isArray(payload.symbols)) throw new Error('Danh mục không hợp lệ.');
+      const next = new Map();
+      for (const item of payload.symbols) {
+        if (!validSymbol(item.symbol) || marketOf(item, feed.market) !== feed.market) continue;
+        const state = item.status || item.contractStatus;
+        next.set(item.symbol, {active:state === 'TRADING', base:item.baseAsset,
+          quote:item.quoteAsset, type:item.contractType});
+      }
+      if (!next.size) throw new Error('Danh mục trống.');
+      feed.catalog = next;
+      feed.expected = [...next.values()].filter(item => item.active).length;
+      feed.catalogOk = true;
+      for(const row of engine.rows.values()) if (row.market === feed.market && next.get(row.symbol)?.active === false) engine.remove(row.key);
+    } catch (_) { feed.catalogOk = false; }
+    finally { clearTimeout(timeout); feed.catalogBusy = false; render(); }
+  }
+  function start(feed, manual = false) {
+    clearTimeout(feed.timer);
+    const old = feed.ws;
+    feed.ws = null; feed.generation++;
+    if(old) { old.onclose = null; old.onmessage = null; old.onerror = null; old.close(); }
+    engine.resetMarket(feed.market);
+    feed.receivedAt = 0; feed.eventTime = 0; feed.openedAt = performance.now(); feed.state = 'connecting';
+    if(manual) feed.failures = 0;
+    const generation = feed.generation, endpoint = feed.endpoints[feed.index];
+    let ws;
+    try { ws = new WebSocket(endpoint.url); } catch (_) { retry(feed, generation); return; }
+    feed.ws = ws;
+    ws.onmessage = event => {
+      if(generation !== feed.generation) return;
+      let payload;
+      try { payload = JSON.parse(event.data); } catch (_) { return; }
+      const ticks = Array.isArray(payload) ? payload : payload.data;
+      if(!Array.isArray(ticks)) return;
+      // A packet may arrive before the watchdog after a network/scheduler gap.
+      // Never bridge such a gap with old samples and produce a false alert.
+      if((feed.receivedAt && performance.now()-feed.receivedAt>=8000) || performance.now()-lastLoop>5000) {
+        engine.resetMarket(feed.market);
+        feed.eventTime=0;
+      }
+      let newest = 0;
+      for(const tick of ticks) {
+        if(!tick || marketOf(tick, endpoint.fallback) !== feed.market || !validSymbol(tick.s)) continue;
+        if(feed.catalog.get(tick.s)?.active === false) continue;
+        if(engine.ingest(tick, endpoint.fallback)) newest = Math.max(newest, Number(tick.E));
+      }
+      if(newest > 0 && newest >= feed.eventTime) {
+        feed.eventTime = newest;
+        feed.receivedAt = performance.now(); feed.state = 'live'; feed.failures = 0;
+        handleAlerts(engine.evaluate(feed.market, newest, true));
+      }
+    };
+    ws.onerror = () => { if(generation === feed.generation) retry(feed, generation); };
+    ws.onclose = () => { if(generation === feed.generation) retry(feed, generation); };
+  }
+  function retry(feed, generation) {
+    if(generation !== feed.generation) return;
+    feed.generation++;
+    if(feed.ws) { feed.ws.onclose=null; feed.ws.onmessage=null; feed.ws.onerror=null; feed.ws.close(); feed.ws=null; }
+    engine.resetMarket(feed.market); feed.receivedAt=0; feed.eventTime=0;
+    feed.state='retrying'; feed.failures++;
+    feed.index = (feed.index + 1) % feed.endpoints.length;
+    const delay = Math.min(30_000, 1500 * 2 ** Math.min(feed.failures - 1, 5)) + Math.random() * 700;
+    feed.retryAt = performance.now() + delay;
+    clearTimeout(feed.timer); feed.timer = setTimeout(() => start(feed), delay);
+    render();
+  }
+  function evaluateAll() {
+    for(const feed of feeds) {
+      const ok=healthy(feed);
+      const now=feed.eventTime + (performance.now() - feed.receivedAt);
+      handleAlerts(engine.evaluate(feed.market, now, ok));
+    }
+  }
+  function handleAlerts(alerts) {
+    if(!alerts.length) return;
+    const received = Date.now();
+    for(const item of alerts) { history.unshift({...item, received}); totalAlerts++; }
+    history.splice(100);
+    renderAlerts(alerts.length);
+    const latest = history[0], down = latest.pct < 0;
+    $('toast-region').innerHTML = `<div class="toast ${down?'negative':''}"><strong class="${down?'down':'up'}">${escape(latest.symbol)} ${pct(latest.pct)}</strong><span>${names[latest.market]} · trong 30 giây${alerts.length>1?` · +${alerts.length-1} cảnh báo khác`:''}</span></div>`;
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>{ $('toast-region').textContent=''; },8000);
+    playSound(down);
+  }
+  function playSound(down=false, force=false) {
+    if(!audio || !soundEnabled || (!force && performance.now()-lastSound<3000)) return;
+    if(audio.state !== 'running') { $('sound-message').textContent='Âm thanh đang tạm dừng. Tắt rồi bật lại để kích hoạt.'; return; }
+    lastSound=performance.now();
+    try {
+      const oscillator=audio.createOscillator(), gain=audio.createGain(), now=audio.currentTime;
+      oscillator.type='sine'; oscillator.frequency.setValueAtTime(down?520:760,now);
+      oscillator.frequency.setValueAtTime(down?380:980,now+.13);
+      gain.gain.setValueAtTime(.001,now); gain.gain.exponentialRampToValueAtTime(.13,now+.015);
+      gain.gain.exponentialRampToValueAtTime(.001,now+.34);
+      oscillator.connect(gain); gain.connect(audio.destination); oscillator.start(now); oscillator.stop(now+.35);
+      oscillator.onended=()=>{oscillator.disconnect();gain.disconnect();};
+    } catch (_) { $('sound-message').textContent='Không phát được âm thanh trên trình duyệt này.'; }
+  }
+  $('sound-toggle').addEventListener('click', async () => {
+    const button=$('sound-toggle'); button.disabled=true;
+    try {
+      if(soundEnabled) soundEnabled=false;
+      else {
+        const Audio=window.AudioContext||window.webkitAudioContext;
+        if(!Audio) throw new Error('Trình duyệt này không hỗ trợ âm thanh.');
+        audio=audio||new Audio(); await audio.resume();
+        if(audio.state!=='running') throw new Error('Chưa bật được âm thanh. Hãy thử lại.');
+        soundEnabled=true; playSound(false,true);
+      }
+      $('sound-message').textContent='';
+    } catch(error) {soundEnabled=false;$('sound-message').textContent=error.message;}
+    button.setAttribute('aria-pressed',String(soundEnabled));
+    $('sound-label').textContent=soundEnabled?'Âm thanh đang bật':'Bật âm thanh'; button.disabled=false;
+  });
+  function renderAlerts(fresh=0) {
+    $('alerts-empty').hidden=history.length>0;
+    $('alert-badge').textContent=totalAlerts;
+    $('alert-feed').innerHTML=history.map((a,index)=>`<article class="alert-card ${a.pct<0?'negative':''} ${index<fresh?'fresh':''}"><div class="alert-card-top"><strong>${escape(a.symbol)}</strong><b class="${a.pct<0?'down':'up'}">${pct(a.pct)}</b></div><div class="alert-card-details"><span>${names[a.market]} · ngưỡng ±${a.threshold}%</span><time>${timeLabel(a.received)}</time></div><p class="alert-prices">${price(a.base)} → ${price(a.price)}</p></article>`).join('');
+    if(fresh) $('alert-feed').scrollTop=0;
+  }
+  function sparkline(row) {
+    const samples=row.samples, n=samples.length;
+    if(n<2) return '<span class="neutral">—</span>';
+    const values=samples.filter((_,i)=>i%Math.max(1,Math.floor(n/32))===0 || i===n-1).map(s=>s.price);
+    const min=Math.min(...values), span=Math.max(...values)-min || 1;
+    const points=values.map((v,i)=>`${(i/(values.length-1)*72+1).toFixed(1)},${(25-(v-min)/span*22).toFixed(1)}`).join(' ');
+    return `<svg class="sparkline ${row.pct===null?'neutral':row.pct<0?'down':'up'}" viewBox="0 0 74 29" aria-hidden="true"><polyline points="${points}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+  }
+  function render() {
+    const connected=feeds.filter(healthy), rows=[...engine.rows.values()];
+    rows.sort((a,b)=>Number(b.ready)-Number(a.ready)||(Math.abs(b.pct||0)-Math.abs(a.pct||0))||a.symbol.localeCompare(b.symbol));
+    const ready=rows.filter(r=>r.ready), active=ready.filter(r=>Math.abs(r.pct)+1e-8>=engine.threshold);
+    $('clock').textContent=timeLabel(Date.now());
+    $('stat-contracts').textContent=rows.length||'—';
+    $('stat-ready').textContent=ready.length;
+    $('stat-active').textContent=active.length;
+    $('stat-alerts').textContent=totalAlerts;
+    $('last-alert-copy').textContent=history.length?'Gần nhất '+timeLabel(history[0].received):'Chưa có cảnh báo';
+    $('warming-copy').textContent=rows.length>ready.length?`${rows.length-ready.length} hợp đồng đang tích lũy`:ready.length?'Sẵn sàng phát hiện biến động':'Đang thu thập dữ liệu';
+    const verified=feeds.every(f=>f.catalogOk), expected=feeds.reduce((s,f)=>s+f.expected,0);
+    $('coverage').textContent=verified?`${expected} hợp đồng đang giao dịch`:'USDⓈ-M + COIN-M · chờ danh mục';
+    const overall=$('overall-state');
+    overall.className='live-state '+(connected.length===2?'live':connected.length===0?'offline':'');
+    overall.querySelector('span').textContent=connected.length===2?'Đang nhận dữ liệu':connected.length===1?'Kết nối một phần':'Chưa nhận được dữ liệu';
+    const notice=$('connection-notice');
+    notice.hidden=connected.length===2&&verified&&ready.length>0;
+    if(connected.length<2) {
+      const missing=feeds.filter(f=>!healthy(f)).map(f=>names[f.market]).join(', ');
+      notice.textContent=`${missing}: chưa nhận được dữ liệu. Đang tự kết nối lại; kiểm tra mạng nếu tình trạng kéo dài. Chỉ các nguồn đã kết nối mới được quét.`;
+    } else if(!verified) {
+      notice.textContent='Luồng giá đang chạy. Chưa xác minh được đầy đủ danh mục hợp đồng; hiện chỉ quét các mã đã nhận từ Binance.';
+    } else if(!ready.length) {
+      notice.textContent='Đã kết nối Binance. Đang tích lũy đủ 30 giây dữ liệu để bắt đầu tính biến động.';
+    }
+    for(const feed of feeds) {
+      const element=$('status-'+feed.market), ok=healthy(feed);
+      const observed=rows.filter(r=>r.market===feed.market).length;
+      element.className=ok?'connected':feed.state==='retrying'?'failed':'';
+      element.textContent=names[feed.market]+' · '+(ok?`${observed}${feed.catalogOk?'/'+feed.expected:''} mã`:(feed.state==='retrying'?`thử lại ${Math.max(1,Math.ceil((feed.retryAt-performance.now())/1000))}s`:'đang kết nối'));
+    }
+    $('table-count').textContent=rows.length+' hợp đồng';
+    $('market-empty').hidden=rows.length>0;
+    $('market-rows').innerHTML=rows.slice(0,visibleCount).map(row=>{
+      const isActive=row.ready&&Math.abs(row.pct)+1e-8>=engine.threshold;
+      const feed=feeds.find(f=>f.market===row.market), meta=feed.catalog.get(row.symbol);
+      const label=names[row.market]+(meta?.type?(meta.type==='PERPETUAL'?' · Vĩnh cửu':' · Có kỳ hạn'):'');
+      return `<tr class="${isActive?(row.pct<0?'alert-down':'alert-up'):''}"><td><span class="symbol">${escape(row.symbol)}</span><span class="market-name">${label}</span></td><td class="price-cell">${price(row.price)}</td><td>${row.ready?`<span class="change ${row.pct<0?'down':row.pct>0?'up':'neutral'}">${pct(row.pct)}</span>`:`<span class="warmup">${Math.floor(row.progress*30)}/30s</span>`}</td><td class="trend-cell">${sparkline(row)}</td></tr>`;
+    }).join('');
+    $('show-more').hidden=rows.length<=visibleCount;
+    $('table-note').textContent=rows.length?`Hiển thị ${Math.min(rows.length,visibleCount)}/${rows.length} · Quét tất cả mã có dữ liệu.`:'Theo dõi toàn bộ hợp đồng đang giao dịch.';
+  }
+  function tick() {
+    const now=performance.now();
+    if(now-lastLoop>5000) for(const feed of feeds) start(feed,true);
+    lastLoop=now;
+    for(const feed of feeds) {
+      if(feed.state==='connecting'&&now-feed.openedAt>12000) retry(feed,feed.generation);
+      else if(feed.state==='live'&&!healthy(feed)) retry(feed,feed.generation);
+    }
+    evaluateAll(); render();
+  }
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden) hiddenAt=performance.now();
+    else {
+      if(hiddenAt!==null&&performance.now()-hiddenAt>5000) for(const feed of feeds) start(feed,true);
+      hiddenAt=null; lastLoop=performance.now(); render();
+    }
+  });
+  window.addEventListener('online',()=>{for(const feed of feeds){start(feed,true);loadCatalog(feed);}});
+  window.addEventListener('offline',()=>{for(const feed of feeds)retry(feed,feed.generation);});
+  window.addEventListener('pageshow',event=>{if(event.persisted)for(const feed of feeds)start(feed,true);});
+  function registerTools() {
+    const context=document.modelContext;
+    if(!context?.registerTool) return;
+    const lifecycle=new AbortController();
+    const register=tool=>{try{Promise.resolve(context.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch(_){}};
+    register({name:'configure_alert_threshold',title:'Đổi ngưỡng cảnh báo',description:'Đổi ngưỡng tăng và giảm của Futures Radar. Có hiệu lực ngay và có thể phát cảnh báo từ dữ liệu hiện tại.',inputSchema:{type:'object',properties:{percent:{type:'number',minimum:0.1,maximum:100}},required:['percent'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){if(!input||typeof input.percent!=='number'||Object.keys(input).some(k=>k!=='percent'))throw new Error('Cần giá trị percent dạng số.');return changeThreshold(input.percent);}});
+    register({name:'read_radar_status',title:'Đọc trạng thái theo dõi',description:'Đọc kết nối, ngưỡng cảnh báo và cảnh báo mới nhất của phiên đang mở.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:true},execute(){return {threshold:engine.threshold,windowSeconds:30,feeds:feeds.map(f=>({market:names[f.market],connected:healthy(f),catalogVerified:f.catalogOk})),symbolsObserved:engine.rows.size,recentAlerts:history.slice(0,10)};}});
+    window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
+  }
+  syncThreshold(); render(); renderAlerts();
+  for(const feed of feeds){start(feed);loadCatalog(feed);}
+  setInterval(tick,1000);
+  setInterval(()=>feeds.forEach(loadCatalog),10*60*1000);
+  registerTools();
+})();
+</script>
+</body>
+</html>
